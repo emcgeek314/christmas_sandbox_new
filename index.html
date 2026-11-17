@@ -871,7 +871,7 @@ ${list}` : 'No events saved yet!';
 // Fetch external JSON dataset
 async function initCalendar() {
   try {
-    const res = await fetch('/christmas_sandbox_new/christmas_events_v2.json');
+    const res = await fetch('christmas_events_v2.json');
     if (!res.ok) throw new Error('Failed to load json');
     const data = await res.json();
     E = data.events;
@@ -892,7 +892,6 @@ async function initCalendar() {
     $('results').innerHTML = '<div class="empty">Error loading christmas_events_v2.json. Make sure both index.html and christmas_events_v2.json are uploaded in the same folder!</div>';
   }
 }
-
 
 let activeEvent = null;
 function openCalendarModal(id, name, start, end, time, venue, city) {
