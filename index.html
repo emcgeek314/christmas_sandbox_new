@@ -906,12 +906,73 @@ async function initCalendar() {
 }
 
 
+
+function parseTimeRange(timeStr, dateStr) {
+  if (!timeStr || /(tba|vary|organizer|schedule|see|check|multiple|varies)/i.test(timeStr)) {
+    return { allDay: true };
+  }
+  
+  let s = timeStr.replace(/–|-|to/g, '-').trim();
+  
+  function timeToMin(part) {
+    let tp = part.trim().toUpperCase();
+    let isPM = tp.includes('PM');
+    let isAM = tp.includes('AM');
+    if (tp.includes('NOON')) return { h: 12, m: 0 };
+    if (tp.includes('MIDNIGHT')) return { h: 0, m: 0 };
+    
+    let clean = tp.replace(/AM|PM/g, '').trim();
+    let parts = clean.split(':');
+    let h = parseInt(parts[0], 10);
+    let m = parts[1] ? parseInt(parts[1], 10) : 0;
+    if (isNaN(h)) return null;
+    if (isPM && h < 12) h += 12;
+    if (isAM && h === 12) h = 0;
+    return { h, m };
+  }
+  
+  let parts = s.split('-');
+  if (parts.length >= 2) {
+    let p1 = parts[0].trim();
+    let p2 = parts[1].trim();
+    let ampmMatch = p2.match(/(AM|PM)/i);
+    if (ampmMatch && !p1.match(/(AM|PM|Noon|Midnight)/i)) {
+      p1 += ' ' + ampmMatch[1];
+    }
+    let st = timeToMin(p1);
+    let et = timeToMin(p2);
+    if (st) {
+      let startD = new Date(dateStr + 'T00:00:00');
+      startD.setHours(st.h, st.m, 0, 0);
+      let endD = new Date(dateStr + 'T00:00:00');
+      if (et) {
+        endD.setHours(et.h, et.m, 0, 0);
+        if (endD < startD) endD.setDate(endD.getDate() + 1);
+      } else {
+        endD.setTime(startD.getTime() + 60 * 60 * 1000);
+      }
+      return { allDay: false, start: startD, end: endD };
+    }
+  }
+  
+  let singleT = timeToMin(s);
+  if (singleT) {
+    let startD = new Date(dateStr + 'T00:00:00');
+    startD.setHours(singleT.h, singleT.m, 0, 0);
+    let endD = new Date(startD.getTime() + 60 * 60 * 1000);
+    return { allDay: false, start: startD, end: endD };
+  }
+  
+  return { allDay: true };
+}
+
 let activeEvent = null;
 function openCalendarModal(id, name, start, end, time, venue, city) {
-    activeEvent = { name, start, end, time, venue, city };
+    activeEvent = { name, start, end, time, venue, city, id };
     document.getElementById('modalEventTitle').innerText = `Add: ${name}`;
     const control = document.getElementById('modalDateControl');
-    const eventDates = [...new Map((occurrenceByEvent.get(id) || [])
+    const occs = occurrenceByEvent.get(id) || [];
+    const eventDates = [...new Map(occs
       .filter(o => o.date)
       .sort((a, b) => a.date.localeCompare(b.date))
       .map(o => [o.date, o])).values()];
@@ -937,40 +998,132 @@ function openCalendarModal(id, name, start, end, time, venue, city) {
       input.type = 'date';
       input.id = 'modalDateInput';
       input.style.cssText = 'width:100%; padding:0.75rem; font-size:1rem; border:1px solid #ccc; border-radius:6px; margin-bottom:1rem; box-sizing:border-box;';
-      input.value = start;
+      input.value = start || todayIso;
       input.min = start;
       input.max = end;
+      activeEvent.time = time || '';
       control.replaceChildren(input);
     }
     document.getElementById('calModal').style.display = 'flex';
 }
+
 function closeModal() {
     document.getElementById('calModal').style.display = 'none';
 }
+
 function addToCalendarConfirmed() {
     const selectedDate = document.getElementById('modalDateInput').value;
     if (!selectedDate) return;
-    const cleanDate = selectedDate.replace(/-/g, '');
-    const dates = `${cleanDate}T180000Z/${cleanDate}T210000Z`;
+    
+    let parsed = parseTimeRange(activeEvent.time, selectedDate);
+    let datesParam = '';
+    
+    if (parsed.allDay) {
+      const clean = selectedDate.replace(/-/g, '');
+      const nextD = new Date(selectedDate + 'T12:00:00');
+      nextD.setDate(nextD.getDate() + 1);
+      const nextClean = [nextD.getFullYear(), String(nextD.getMonth()+1).padStart(2,'0'), String(nextD.getDate()).padStart(2,'0')].join('');
+      datesParam = `${clean}/${nextClean}`;
+    } else {
+      function toGCalUTC(d) {
+        return d.getUTCFullYear() +
+          String(d.getUTCMonth() + 1).padStart(2, '0') +
+          String(d.getUTCDate()).padStart(2, '0') + 'T' +
+          String(d.getUTCHours()).padStart(2, '0') +
+          String(d.getUTCMinutes()).padStart(2, '0') +
+          String(d.getUTCSeconds()).padStart(2, '0') + 'Z';
+      }
+      datesParam = `${toGCalUTC(parsed.start)}/${toGCalUTC(parsed.end)}`;
+    }
+    
     const text = encodeURIComponent(activeEvent.name);
-    const details = encodeURIComponent(`Time: ${activeEvent.time}\nLocation: ${activeEvent.venue}, ${activeEvent.city}`);
+    const details = encodeURIComponent(`Time: ${activeEvent.time || 'TBA'}\nLocation: ${activeEvent.venue || ''}, ${activeEvent.city}`);
     const location = encodeURIComponent(`${activeEvent.venue ? activeEvent.venue + ', ' : ''}${activeEvent.city}, MO`);
-    const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${text}&dates=${dates}&details=${details}&location=${location}`;
+    const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${text}&dates=${datesParam}&details=${details}&location=${location}`;
     window.open(gcalUrl, '_blank');
     closeModal();
 }
 
-initCalendar();
-</script>
+function downloadICS() {
+    const selectedDate = document.getElementById('modalDateInput').value;
+    if (!selectedDate) return;
+    
+    let parsed = parseTimeRange(activeEvent.time, selectedDate);
+    let nowUTC = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    let uid = 'event_' + (activeEvent.id || 'custom') + '_' + selectedDate.replace(/-/g, '') + '@ellenscalendar.github.io';
+    
+    let dtstart = '';
+    let dtend = '';
+    
+    if (parsed.allDay) {
+      let dClean = selectedDate.replace(/-/g, '');
+      let nextDateObj = new Date(selectedDate + 'T12:00:00');
+      nextDateObj.setDate(nextDateObj.getDate() + 1);
+      let nextClean = [nextDateObj.getFullYear(), String(nextDateObj.getMonth()+1).padStart(2,'0'), String(nextDateObj.getDate()).padStart(2,'0')].join('');
+      dtstart = `DTSTART;VALUE=DATE:${dClean}`;
+      dtend = `DTEND;VALUE=DATE:${nextClean}`;
+    } else {
+      function formatICalUTC(d) {
+        return d.getUTCFullYear() +
+          String(d.getUTCMonth() + 1).padStart(2, '0') +
+          String(d.getUTCDate()).padStart(2, '0') + 'T' +
+          String(d.getUTCHours()).padStart(2, '0') +
+          String(d.getUTCMinutes()).padStart(2, '0') +
+          String(d.getUTCSeconds()).padStart(2, '0') + 'Z';
+      }
+      dtstart = `DTSTART:${formatICalUTC(parsed.start)}`;
+      dtend = `DTEND:${formatICalUTC(parsed.end)}`;
+    }
+    
+    function escICal(str) {
+      if (!str) return '';
+      return String(str).replace(/[\\;,\n]/g, function(match) {
+        if (match === '\n') return '\\n';
+        return '\\' + match;
+      });
+    }
+    
+    let summary = escICal(activeEvent.name);
+    let location = escICal((activeEvent.venue ? activeEvent.venue + ', ' : '') + activeEvent.city + ', MO');
+    let description = escICal(`Time: ${activeEvent.time || 'TBA'}\nLocation: ${activeEvent.venue || ''}, ${activeEvent.city}`);
+    
+    let icsContent = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Ellen\'s 2026 Christmas Adventure Calendar//EN',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      `UID:${uid}`,
+      `DTSTAMP:${nowUTC}`,
+      dtstart,
+      dtend,
+      `SUMMARY:${summary}`,
+      `LOCATION:${location}`,
+      `DESCRIPTION:${description}`,
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+    
+    let blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    let link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = `${activeEvent.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_${selectedDate}.ics`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    closeModal();
+}
 
-    <!-- Calendar Modal -->
+<!-- Calendar Modal -->
     <div id="calModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; padding:1rem; box-sizing:border-box; z-index:999;">
         <div class="modal-content" style="background:white; padding:1.5rem; border-radius:12px; width:100%; max-width:400px; box-shadow:0 4px 12px rgba(0,0,0,0.2);">
             <div class="modal-title" id="modalEventTitle" style="font-size:1.2rem; font-weight:bold; margin-bottom:1rem; color:var(--pine);">Add to Calendar</div>
             <p style="font-size:0.9rem; margin-bottom:0.5rem;">Select the exact date you plan to attend:</p>
             <div id="modalDateControl"></div>
-            <div class="modal-buttons" style="display:flex; justify-content:flex-end; gap:0.5rem;">
+            <div class="modal-buttons" style="display:flex; justify-content:flex-end; gap:0.5rem; flex-wrap:wrap;">
                 <button class="pill-btn" onclick="closeModal()">Cancel</button>
+                <button class="pill-btn" onclick="downloadICS()">Download .ics (Apple/iPhone)</button>
                 <button class="pill-btn saved" onclick="addToCalendarConfirmed()">Add to Google Calendar</button>
             </div>
         </div>
