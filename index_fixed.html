@@ -1,0 +1,1284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ellen’s 2026 Christmas Adventure Calendar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pine:#193929;
+  --pine-dark:#11281d;
+  --pine-soft:#ebf1ed;
+  --cranberry:#7d1d2b;
+  --cranberry-soft:#f9edef;
+  --gold:#b98c3e;
+  --gold-bright:#cfa24c;
+  --gold-light:#f6ecda;
+  --paper:#fbf9f4;
+  --panel-bg:#f7f3ea;
+  --card:#ffffff;
+  --ink:#1b2821;
+  --muted:#58695f;
+  --line:#ded7c8;
+  --shadow:0 8px 24px rgba(25,57,41,.06);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  margin:0;
+  font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+  color:var(--ink);
+  background-color:var(--paper);
+  background-image:
+    radial-gradient(rgba(185,140,62,.08) 1px, transparent 0),
+    radial-gradient(rgba(25,57,41,.04) 1px, transparent 0);
+  background-size:28px 28px;
+  background-position:0 0, 14px 14px;
+  line-height:1.48;
+}
+
+header{
+  padding:16px 16px 18px;
+  position:relative;
+  border-bottom:1px solid rgba(185,140,62,.35);
+  background:linear-gradient(180deg, #fcfaf5 0%, #f8f4ea 100%);
+}
+.header-inner{max-width:1080px;margin:0 auto;text-align:center;position:relative}
+.top-utility-bar{
+  display:flex;justify-content:space-between;align-items:center;gap:8px;
+  margin-bottom:12px;
+}
+.sync-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;font-weight:700;letter-spacing:.4px;
+  color:var(--pine);background:#fff;border:1px solid var(--line);
+  padding:5px 11px;border-radius:99px;
+}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:#2b8a57;display:inline-block}
+.sync-dot.offline{background:var(--gold)}
+
+.fav-pill-btn-wrap{display:inline-flex;align-items:center;gap:6px;position:relative}
+.top-fav-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  background:#fff;border:1.5px solid var(--gold);color:var(--pine);
+  font:inherit;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;
+  padding:5px 10px;border-radius:99px;cursor:pointer;
+  white-space:nowrap;
+  box-shadow:0 2px 8px rgba(185,140,62,.15);
+  transition:all .15s ease;
+}
+.top-fav-btn:hover,.top-fav-btn.active{
+  background:var(--cranberry);border-color:var(--cranberry);color:#fff;
+}
+.top-fav-btn .heart{color:var(--cranberry);font-size:13px}
+.top-fav-btn:hover .heart,.top-fav-btn.active .heart{color:#fff}
+
+.info-tooltip-btn{
+  background:#fff;border:1.5px solid var(--gold);color:var(--gold);
+  width:24px;height:24px;border-radius:50%;font-size:12px;font-weight:700;
+  cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.info-tooltip-btn:hover .tooltip-popup{display:block}
+.tooltip-popup{
+  display:none;position:absolute;right:0;top:30px;width:220px;
+  background:#fff;border:1px solid var(--gold);border-radius:12px;
+  padding:10px 12px;font-size:11.5px;color:var(--ink);text-align:left;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);z-index:99;font-weight:500;line-height:1.4;
+}
+
+.botanical-crest{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  color:var(--gold);margin-bottom:2px;
+}
+.crest-text{
+  font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--pine);
+}
+h1{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-weight:700;
+  font-size:clamp(31px,6.5vw,52px);
+  line-height:1.05;
+  color:var(--pine);
+  margin:2px 0 8px;
+  letter-spacing:-0.01em;
+}
+.subtitle{
+  margin:0 auto;
+  font-size:clamp(13.5px,3.2vw,16px);
+  color:#3c4f44;
+  max-width:650px;
+  font-weight:500;
+}
+
+main{max-width:1080px;margin:0 auto;padding:16px 14px 44px}
+
+.dashboard{
+  background:var(--panel-bg);
+  border:1.5px solid var(--gold);
+  outline:1px solid rgba(185,140,62,.3);
+  outline-offset:-5px;
+  border-radius:20px;
+  padding:16px;
+  box-shadow:0 10px 28px rgba(25,57,41,.07);
+  margin-bottom:18px;
+}
+.dash-top{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;
+  padding-bottom:12px;margin-bottom:12px;
+  border-bottom:1px solid rgba(185,140,62,.28);
+}
+.mode-pills{display:flex;flex-wrap:wrap;gap:7px}
+.mode-pill{
+  border:1px solid #cfc5b0;background:#fff;color:var(--pine);
+  font:inherit;font-size:12.5px;font-weight:700;
+  padding:8px 14px;border-radius:99px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;
+  transition:all .15s ease;
+}
+.mode-pill:hover{border-color:var(--gold)}
+.mode-pill.active{
+  background:var(--pine);border-color:var(--pine);color:#fff;
+  box-shadow:0 3px 10px rgba(25,57,41,.2);
+}
+.mode-pill.fav-pill.active{
+  background:var(--cranberry);border-color:var(--cranberry);color:#fff;
+}
+.pill-count{
+  background:rgba(0,0,0,.08);padding:1px 7px;border-radius:99px;font-size:11px;
+}
+.mode-pill.active .pill-count{background:rgba(255,255,255,.22);color:#fff}
+
+.weekend-strip{
+  display:flex;gap:7px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px;
+  scrollbar-width:none;
+}
+.weekend-strip::-webkit-scrollbar{display:none}
+.wk-chip{
+  flex:0 0 auto;border:1px solid #d4c8b0;background:#fff;color:var(--pine);
+  border-radius:99px;padding:7px 13px;font-size:12px;font-weight:700;cursor:pointer;
+  white-space:nowrap;transition:all .15s;
+}
+.wk-chip.active{
+  background:var(--pine);border-color:var(--pine);color:#fff;
+  box-shadow:0 3px 8px rgba(25,57,41,.2);
+}
+
+.ribbon-header{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.9px;
+  color:var(--muted);margin-bottom:6px;
+}
+.date-ribbon{
+  display:flex;gap:7px;overflow-x:auto;padding:3px 2px 9px;margin-bottom:10px;
+  scroll-behavior:smooth;scrollbar-width:thin;
+}
+.date-pill{
+  flex:0 0 auto;min-width:56px;padding:8px 6px;border-radius:12px;
+  border:1px solid #d8d0c0;background:#fff;color:var(--ink);
+  text-align:center;cursor:pointer;transition:all .15s;
+}
+.date-pill.is-wknd{background:#fdfaf2;border-color:#dfd1b3}
+.date-pill.is-past{opacity:0.35;background:#f2efe6}
+.date-pill .dp-dow{font-size:10px;font-weight:700;text-transform:uppercase;color:var(--muted);display:block}
+.date-pill .dp-day{font-size:15px;font-weight:700;display:block;margin:1px 0}
+.date-pill .dp-mon{font-size:10px;color:var(--muted);display:block}
+.date-pill.active{
+  background:var(--pine);border-color:var(--pine);color:#fff;opacity:1;
+  transform:translateY(-1px);box-shadow:0 4px 10px rgba(25,57,41,.25);
+}
+.date-pill.active .dp-dow,.date-pill.active .dp-mon{color:#dce9e1}
+
+.filter-row{
+  display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:9px;margin-bottom:10px;
+}
+input[type=search],select{
+  width:100%;height:42px;padding:0 13px;
+  border:1px solid #cfc6b4;border-radius:99px;
+  background:#fff;color:var(--ink);font:inherit;font-size:13px;font-weight:500;
+}
+input[type=search]:focus,select:focus{outline:none;border-color:var(--pine)}
+.dash-footer{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;
+  padding-top:8px;border-top:1px solid rgba(185,140,62,.22);
+}
+.check-wrap{
+  display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--pine);
+}
+.check-wrap input{width:16px;height:16px;accent-color:var(--pine)}
+.btn-mini{
+  border:1px solid #cfc6b4;background:#fff;color:var(--pine);
+  border-radius:99px;padding:5px 12px;font:inherit;font-size:11.5px;font-weight:700;cursor:pointer;
+}
+.btn-mini:hover{background:var(--gold-light);border-color:var(--gold)}
+
+.summary-bar{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;
+  margin:4px 4px 14px;font-size:13px;color:var(--muted);font-weight:600;
+}
+
+.day-group-header{
+  grid-column:1 / -1;
+  display:flex;align-items:center;gap:12px;
+  margin:12px 0 2px;
+}
+.day-group-header h3{
+  margin:0;font-family:'Cormorant Garamond',Georgia,serif;font-size:23px;font-weight:700;color:var(--pine);
+}
+.day-group-header::after{
+  content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--gold),transparent);
+}
+
+.cards{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;
+}
+.card{
+  background:var(--card);
+  border:2px solid var(--pine);
+  border-radius:18px;
+  padding:18px 16px 16px;
+  box-shadow:var(--shadow);
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  position:relative;
+  transition:transform .16s ease,box-shadow .16s ease;
+}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(25,57,41,.11)}
+.card.theme-cranberry{border-color:var(--cranberry)}
+.card.theme-gold{border-color:var(--gold);box-shadow:0 8px 24px rgba(185,140,62,.14)}
+
+.card-kicker{
+  font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--muted);background:#f3efe6;padding:4px 11px;border-radius:99px;
+  margin-bottom:12px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.card.theme-cranberry .card-kicker{background:var(--cranberry-soft);color:var(--cranberry)}
+
+.medallion-wrap{
+  position:relative;width:72px;height:72px;margin:0 auto 10px;
+  display:flex;align-items:center;justify-content:center;
+}
+.medallion{
+  width:64px;height:64px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #fffdf8, #efe6d5);
+  border:1.5px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:inset 0 2px 6px rgba(185,140,62,.2);
+}
+.card.theme-cranberry .medallion{
+  background:radial-gradient(circle at 30% 30%, #fff9fa, #f5dfe3);
+  border-color:#c97a86;
+}
+.sparkle-left,.sparkle-right{
+  position:absolute;color:var(--gold);font-size:13px;pointer-events:none;
+}
+.sparkle-left{left:-4px;top:14px}
+.sparkle-right{right:-4px;bottom:14px}
+
+.card h2{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-weight:700;font-size:22px;line-height:1.15;
+  margin:0 0 6px;color:var(--ink);
+}
+.card-datetime{
+  font-size:12.5px;font-weight:700;color:var(--pine);margin-bottom:4px;
+}
+.card.theme-cranberry .card-datetime{color:var(--cranberry)}
+.card-venue{
+  font-size:12px;color:var(--muted);margin-bottom:8px;
+}
+.crowd-pill{
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--gold);color:#fff;
+  font-size:10.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;
+  padding:4px 11px;border-radius:99px;margin-bottom:8px;
+}
+.card-note{
+  font-size:12.5px;color:#394a40;margin:2px 0 12px;line-height:1.45;
+}
+.card-price{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:18px;font-weight:700;color:var(--cranberry);
+  margin-bottom:10px;
+}
+
+.card-actions{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;margin-top:auto;margin-bottom:10px;
+}
+.pill-btn{
+  border:1px solid #cfc6b4;background:#fff;color:var(--ink);
+  font:inherit;font-size:12px;font-weight:700;
+  padding:7px 14px;border-radius:99px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:5px;
+  transition:all .15s;
+}
+.pill-btn:hover{border-color:var(--pine);background:#f7f5ef}
+.pill-btn.saved{
+  background:var(--cranberry);border-color:var(--cranberry);color:#fff;
+}
+.ext-link{
+  font-size:12.5px;font-weight:700;color:var(--pine);
+  text-decoration:underline;text-underline-offset:3px;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.ext-link:hover{color:var(--cranberry)}
+
+.more-dates-box{
+  width:100%;margin-top:10px;padding-top:8px;border-top:1px dashed #e2dacb;
+  font-size:12px;color:var(--muted);text-align:left;
+}
+
+.empty{
+  grid-column:1 / -1;padding:36px 18px;text-align:center;
+  border:1.5px dashed #cfc6b4;border-radius:18px;background:#fff;color:var(--muted);
+}
+footer{
+  max-width:1080px;margin:0 auto;padding:20px 16px 36px;
+  text-align:center;font-size:12.5px;color:var(--muted);
+  border-top:1px solid rgba(185,140,62,.3);
+  line-height:1.6;
+}
+@media(max-width:900px){
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:640px){
+  .filter-row,.cards{grid-template-columns:1fr}
+  .mode-pill{font-size:12px;padding:7px 11px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="top-utility-bar">
+      <span class="sync-pill" id="syncStatus"><span class="sync-dot" id="syncDot"></span> <span id="syncText">Connecting live votes…</span></span>
+      <div class="fav-pill-btn-wrap">
+        <button class="top-fav-btn" id="topFavBtn"><span class="heart">♥</span> Crowd Favorites(<span id="topFavCount">0</span>)</button>
+        <button class="info-tooltip-btn" title="How Crowd Favorites work">i<div class="tooltip-popup"><strong>♥ Crowd Favorites:</strong> Ranked live by group saves across all devices. Tap ★ Save on any card to vote!</div></button>
+      </div>
+    </div>
+
+    <div class="botanical-crest" aria-hidden="true">
+      <svg width="34" height="18" viewBox="0 0 34 18" fill="none"><path d="M32 14C24 14 16 10 8 3M24 13C21 9 19 6 19 2M17 10C14 7 12 4 12 1M28 14C25 11 24 8 24 5" stroke="#b98c3e" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <span class="crest-text">✦ 2026 St. Louis &amp; Beyond ✦</span>
+      <svg width="34" height="18" viewBox="0 0 34 18" fill="none" style="transform:scaleX(-1)"><path d="M32 14C24 14 16 10 8 3M24 13C21 9 19 6 19 2M17 10C14 7 12 4 12 1M28 14C25 11 24 8 24 5" stroke="#b98c3e" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </div>
+
+    <h1>Ellen’s 2026 Christmas Adventure Calendar</h1>
+    <p class="subtitle">Holiday lights, craft fairs, pop-up bars &amp; festive oddities across the St. Louis region</p>
+  </div>
+</header>
+
+<main>
+  <section class="dashboard" aria-label="Calendar Controls">
+    <div class="dash-top">
+      <div class="mode-pills">
+        <button class="mode-pill active" id="tabAll">📅 Calendar &amp; Dates</button>
+        <button class="mode-pill" id="tabWeekend">🥂 Weekend Planner</button>
+        <button class="mode-pill fav-pill" id="tabFavorites">♥ Crowd Favorites <span class="pill-count" id="favCountBadge">0</span></button>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="btn-mini" id="todayBtn">Today</button>
+        <button class="btn-mini" id="resetBtn">Reset All</button>
+      </div>
+    </div>
+
+    <div id="weekendStripWrap" hidden>
+      <div class="ribbon-header"><span>Jump to a 2026 Holiday Weekend (Fri–Sun)</span></div>
+      <div class="weekend-strip" id="weekendStrip"></div>
+    </div>
+
+    <div id="dateRibbonSection">
+      <div class="ribbon-header">
+        <span>Date Slider (Tap a day or browse all)</span>
+        <button class="btn-mini" id="clearDateBtn" style="padding:3px 10px;font-size:11px">All Dates</button>
+      </div>
+      <div class="date-ribbon" id="dateRibbon"></div>
+    </div>
+
+    <div class="filter-row">
+      <input id="search" type="search" placeholder="Search Winterfest, trivia, pop-up, market…">
+      <select id="category"><option value="">Category (All)</option></select>
+      <select id="region">
+        <option value="">Region (All)</option>
+        <option value="stcharles">St. Charles &amp; Warren Co.</option>
+        <option value="stl">St. Louis City &amp; County</option>
+        <option value="wine">MO Wine Country &amp; West</option>
+        <option value="metroeast">Metro East Illinois</option>
+      </select>
+    </div>
+
+    <div class="dash-footer">
+      <label class="check-wrap">
+        <input id="special" type="checkbox">
+        <span>Special Events Only <span style="font-weight:400;color:var(--muted)">(hide ongoing nightly attractions)</span></span>
+      </label>
+      <button class="btn-mini" id="shareSavedBtn" style="background:#fff;border-color:var(--gold);color:var(--pine)">📋 Copy My Saved List</button>
+    </div>
+  </section>
+
+  <div class="summary-bar" id="summary" aria-live="polite"></div>
+  <section id="results" class="cards"></section>
+</main>
+
+<footer>
+  Hand-researched and custom-coded from scratch by Ellen with Gemini &amp; ChatGPT • 2026 Holiday Season.<br>
+  <span style="font-size:11.5px;color:#6b7c71"><em>Note: Child-focused events have been intentionally excluded to keep this guide curated for adults, couples, and friends. Always verify hours &amp; tickets with organizers before heading out.</em></span>
+</footer>
+
+<script>
+const FIREBASE_DB_URL = "https://christmas-calendar-2026-default-rtdb.firebaseio.com/";
+let E = [];
+let O = [];
+let byId = new Map();
+</script>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+
+const categoryAliases = {
+  'Arts & Crafts':'Arts, Crafts & Workshops','Crafts & Workshops':'Arts, Crafts & Workshops','School Craft Fairs':'Arts, Crafts & Workshops','Workshops':'Arts, Crafts & Workshops',
+  'Music':'Music & Entertainment','Music & Shows':'Music & Entertainment','Movies & Shows':'Music & Entertainment','Theater':'Music & Entertainment',
+  'Pop-Ups':'Holiday Pop-Ups'
+};
+
+const evidenceFlags = {
+  "evt001":{"drinks":false,"outdoors":true},"evt017":{"drinks":false,"outdoors":true},"evt024":{"drinks":false,"outdoors":true},
+  "evt038":{"drinks":true,"outdoors":false},"evt041":{"drinks":true,"outdoors":false},"evt047":{"drinks":false,"outdoors":true},
+  "evt056":{"drinks":true,"outdoors":false},"evt057":{"drinks":false,"outdoors":true},"evt058":{"drinks":true,"outdoors":true},
+  "evt060":{"drinks":false,"outdoors":true},"evt067":{"drinks":true,"outdoors":false},"evt069":{"drinks":false,"outdoors":true},
+  "evt070":{"drinks":true,"outdoors":false},"evt075":{"drinks":true,"outdoors":false},"evt076":{"drinks":true,"outdoors":false},
+  "evt078":{"drinks":true,"outdoors":true},"evt079":{"drinks":true,"outdoors":false},"evt080":{"drinks":true,"outdoors":false},
+  "evt082":{"drinks":true,"outdoors":false},"evt084":{"drinks":false,"outdoors":true},"evt085":{"drinks":false,"outdoors":true},
+  "evt089":{"drinks":true,"outdoors":false},"evt091":{"drinks":true,"outdoors":false},"evt097":{"drinks":true,"outdoors":false},
+  "evt107":{"drinks":false,"outdoors":true},"evt110":{"drinks":true,"outdoors":false},"evt111":{"drinks":true,"outdoors":false},
+  "evt126":{"drinks":true,"outdoors":false},"evt132":{"drinks":false,"outdoors":true},"evt134":{"drinks":true,"outdoors":true},
+  "evt135":{"drinks":true,"outdoors":false},"evt136":{"drinks":true,"outdoors":false},"evt137":{"drinks":true,"outdoors":false},
+  "evt138":{"drinks":true,"outdoors":false},"evt139":{"drinks":true,"outdoors":false},"evt140":{"drinks":true,"outdoors":false},
+  "evt141":{"drinks":true,"outdoors":false},"evt142":{"drinks":true,"outdoors":true},"evt143":{"drinks":true,"outdoors":false},
+  "evt144":{"drinks":true,"outdoors":false},"evt145":{"drinks":true,"outdoors":false},"evt146":{"drinks":true,"outdoors":false},
+  "evt153":{"drinks":true,"outdoors":false},"evt154":{"drinks":false,"outdoors":true},"evt155":{"drinks":false,"outdoors":true},
+  "evt159":{"drinks":false,"outdoors":true},"evt160":{"drinks":true,"outdoors":false},"evt162":{"drinks":false,"outdoors":true},
+  "rel001":{"drinks":true,"outdoors":false},"rel002":{"drinks":true,"outdoors":false},"rel003":{"drinks":true,"outdoors":false},
+  "rel004":{"drinks":true,"outdoors":false},"rel006":{"drinks":false,"outdoors":true},"rel010":{"drinks":false,"outdoors":true},
+  "r3_008":{"drinks":false,"outdoors":true},"new003":{"drinks":false,"outdoors":true},"new007":{"drinks":false,"outdoors":true},
+  "new008":{"drinks":true,"outdoors":true},"new009":{"drinks":true,"outdoors":false},"final001":{"drinks":true,"outdoors":false},
+  "add001":{"drinks":true,"outdoors":false},"add002":{"drinks":true,"outdoors":false},"add003":{"drinks":true,"outdoors":false},
+  "add_esc_01":{"drinks":false,"outdoors":false},"add_esc_02":{"drinks":false,"outdoors":false},"add_stgen_01":{"drinks":false,"outdoors":true},
+  "wf_triv_01":{"drinks":true,"outdoors":true},"wf_carol_01":{"drinks":false,"outdoors":true},"wf_neon_01":{"drinks":false,"outdoors":true}
+};
+
+function getRegion(city) {
+  const c = (city || '').toLowerCase();
+  if (c.includes(', il') || ['belleville','millstadt','madison','alton','edwardsville','glen carbon','jerseyville'].some(k => c.includes(k))) return 'metroeast';
+  if (['hermann','augusta','defiance','washington','new haven','marthasville','starkenburg','leslie','union','ste. genevieve'].some(k => c.includes(k))) return 'wine';
+  if (['st. charles','cottleville','wentzville','wright city','warrenton','new melle','st. peters','o’fallon','ofallon'].some(k => c.includes(k)) && !c.includes(', il')) return 'stcharles';
+  return 'stl';
+}
+
+const displayCategories = e => {
+  const set = new Set(e.categories.map(c => categoryAliases[c] || c));
+  if (e.categories.includes('Oddities')) set.add('Unique Experiences');
+  if (evidenceFlags[e.id]?.drinks) set.add('Drinks & Cocktails');
+  if (evidenceFlags[e.id]?.outdoors) set.add('Outdoors');
+  return [...set].sort();
+};
+
+function populateCategories() {
+  const allCats = [...new Set(E.flatMap(displayCategories))].sort();
+  const catSel = $('category');
+  catSel.innerHTML = '<option value="">Category (All)</option>';
+  allCats.forEach(c => {
+    const op = document.createElement('option');
+    op.value = c; op.textContent = c;
+    catSel.append(op);
+  });
+}
+
+function getMedallionSVG(cats, isCranberry) {
+  const stroke = isCranberry ? '#7d1d2b' : '#193929';
+  const accent = '#b98c3e';
+  if (cats.includes('Drinks & Cocktails') || cats.includes('Holiday Pop-Ups') || cats.includes('Wineries & Breweries')) {
+    return `<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8M12 15v7M6 3h12l-1.5 7.5a4.5 4.5 0 0 1-9 0L6 3z"/><path d="M6.5 6h11" stroke="${accent}"/></svg>`;
+  }
+  if (cats.includes('Unique Experiences') || cats.includes('Oddities')) {
+    return `<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/><path d="M19 3v4M17 5h4" stroke="${accent}"/></svg>`;
+  }
+  if (cats.includes('Lights')) {
+    return `<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="rgba(185,140,62,.18)" stroke="${accent}"/></svg>`;
+  }
+  if (cats.includes('Markets') || cats.includes('Arts, Crafts & Workshops')) {
+    return `<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18"/><path d="M12 8c-2-3-5-3-5-1s3 1 5 1zm0 0c2-3 5-3 5-1s-3 1-5 1z" stroke="${accent}"/></svg>`;
+  }
+  return `<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L6 10h4l-5 6h5v5h4v-5h5l-5-6h4L12 3z" fill="rgba(25,57,41,.08)"/><circle cx="12" cy="2.5" r="1" fill="${accent}" stroke="none"/></svg>`;
+}
+
+function extractPriceBadge(notes) {
+  if (!notes) return '';
+  if (/\bfree\b/i.test(notes) && !/free parking/i.test(notes)) {
+    const m = notes.match(/\$\d+(?:\.\d{2})?(?:\/[a-z]+)?/i);
+    return m ? `Free entry · ${m[0]} tour/tasting` : 'Free Admission';
+  }
+  const m = notes.match(/\$\d+(?:\.\d{2})?(?:\s*(?:–|-|to)\s*\$\d+(?:\.\d{2})?)?(?:\/(?:person|adult|vehicle|carload|team))?/i);
+  return m ? m[0] : '';
+}
+
+let viewMode = 'all';
+function centralTodayIso() {
+  const parts = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
+  const value = Object.fromEntries(parts.map(part => [part.type, part.value]));
+  return `${value.year}-${value.month}-${value.day}`;
+}
+let todayIso = centralTodayIso();
+let calendarStartDate = '';
+let calendarEndDate = '';
+let selectedDate = '';
+let selectedWeekend = null;
+let expandedCards = new Set();
+let clientId = localStorage.getItem('ellen_client_id');
+if (!clientId) {
+  clientId = 'ellen_' + Math.random().toString(36).substring(2, 10);
+  localStorage.setItem('ellen_client_id', clientId);
+}
+let mySaved = new Set(JSON.parse(localStorage.getItem('ellen_cal_saved_2026') || '[]'));
+let globalCounts = JSON.parse(localStorage.getItem('ellen_cal_counts_2026') || '{}');
+
+async function syncFirebaseCounts() {
+  if (!FIREBASE_DB_URL) return;
+  try {
+    const [countsRes, savedRes] = await Promise.all([
+      fetch(`${FIREBASE_DB_URL.replace(/\/$/,'')}/counts.json`),
+      fetch(`${FIREBASE_DB_URL.replace(/\/$/,'')}/users/${clientId}/saved.json`)
+    ]);
+    if (countsRes.ok) {
+      const remote = await countsRes.json();
+      globalCounts = remote && typeof remote === 'object' && !Array.isArray(remote) ? remote : {};
+      localStorage.setItem('ellen_cal_counts_2026', JSON.stringify(globalCounts));
+    }
+    if (savedRes.ok) {
+      const remoteSaved = await savedRes.json();
+      if (Array.isArray(remoteSaved)) {
+        remoteSaved.forEach(id => mySaved.add(id));
+        localStorage.setItem('ellen_cal_saved_2026', JSON.stringify([...mySaved]));
+      }
+    }
+    $('syncDot').classList.remove('offline');
+    $('syncText').textContent = 'Live Cloud Sync Connected';
+    updateFavBadge();
+    render();
+  } catch (err) {
+    $('syncDot').classList.add('offline');
+    $('syncText').textContent = 'Device Saves Active';
+  }
+}
+
+async function toggleSave(eventId) {
+  const adding = !mySaved.has(eventId);
+  const currentCount = Math.max(0, Number(globalCounts[eventId]) || 0);
+  if (adding) {
+    mySaved.add(eventId);
+    globalCounts[eventId] = currentCount + 1;
+  } else {
+    mySaved.delete(eventId);
+    globalCounts[eventId] = Math.max(0, currentCount - 1);
+  }
+  localStorage.setItem('ellen_cal_saved_2026', JSON.stringify([...mySaved]));
+  localStorage.setItem('ellen_cal_counts_2026', JSON.stringify(globalCounts));
+  updateFavBadge();
+  render();
+
+  if (FIREBASE_DB_URL) {
+    try {
+      await Promise.all([
+        fetch(`${FIREBASE_DB_URL.replace(/\/$/,'')}/counts/${eventId}.json`, {
+          method: 'PUT',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(globalCounts[eventId])
+        }),
+        fetch(`${FIREBASE_DB_URL.replace(/\/$/,'')}/users/${clientId}/saved.json`, {
+          method: 'PUT',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify([...mySaved])
+        })
+      ]);
+    } catch (e) {}
+  }
+}
+
+function toggleMoreInfo(eventId) {
+  if (expandedCards.has(eventId)) expandedCards.delete(eventId);
+  else expandedCards.add(eventId);
+  render();
+}
+
+function updateFavBadge() {
+  const totalPopular = Object.values(globalCounts).filter(v => v > 0).length;
+  const badgeVal = Math.max(mySaved.size, totalPopular);
+  $('favCountBadge').textContent = badgeVal;
+  $('topFavCount').textContent = badgeVal;
+}
+
+const iso = d => [d.getFullYear(), String(d.getMonth()+1).padStart(2,'0'), String(d.getDate()).padStart(2,'0')].join('-');
+const pretty = d => new Date(d+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+const prettyFull = d => new Date(d+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+const esc = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+const occurrenceByEvent = new Map();
+
+function buildDateRibbon() {
+  const ribbon = $('dateRibbon');
+  ribbon.innerHTML = '';
+  if (!calendarStartDate || !calendarEndDate) return;
+  let cur = new Date(calendarStartDate + 'T12:00:00');
+  const end = new Date(calendarEndDate + 'T12:00:00');
+  while (cur <= end) {
+    const dStr = iso(cur);
+    const wd = cur.getDay();
+    const isWknd = (wd === 5 || wd === 6 || wd === 0);
+    const isPast = (dStr < todayIso);
+    const btn = document.createElement('button');
+    btn.className = `date-pill${isWknd ? ' is-wknd' : ''}${isPast ? ' is-past' : ''}${selectedDate === dStr ? ' active' : ''}`;
+    btn.dataset.date = dStr;
+    btn.innerHTML = `<span class="dp-dow">${cur.toLocaleDateString('en-US',{weekday:'short'})}</span><span class="dp-day">${cur.getDate()}</span><span class="dp-mon">${cur.toLocaleDateString('en-US',{month:'short'})}</span>`;
+    btn.onclick = () => {
+      selectedDate = (selectedDate === dStr) ? '' : dStr;
+      selectedWeekend = null;
+      syncRibbonSelection();
+      render();
+    };
+    ribbon.appendChild(btn);
+    cur.setDate(cur.getDate() + 1);
+  }
+}
+
+function syncRibbonSelection() {
+  document.querySelectorAll('.date-pill').forEach(p => {
+    const active = p.dataset.date === selectedDate;
+    p.classList.toggle('active', active);
+    if (active) p.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+  });
+}
+
+const holidayWeekends = [
+  ['2026-11-20','2026-11-22','Nov 20–22 · Pre-Thanksgiving'],
+  ['2026-11-27','2026-11-29','Nov 27–29 · Thanksgiving Wknd'],
+  ['2026-12-04','2026-12-06','Dec 4–6 · First Dec Wknd'],
+  ['2026-12-11','2026-12-13','Dec 11–13 · Mid-Dec Wknd'],
+  ['2026-12-18','2026-12-20','Dec 18–20 · Pre-Christmas'],
+  ['2026-12-25','2026-12-27','Dec 25–27 · Christmas Wknd'],
+  ['2027-01-01','2027-01-03','Jan 1–3 · New Year Wknd']
+];
+
+function buildWeekendStrip() {
+  const strip = $('weekendStrip');
+  strip.innerHTML = '';
+  holidayWeekends.forEach(([fri, sun, label]) => {
+    const btn = document.createElement('button');
+    btn.className = `wk-chip${selectedWeekend && selectedWeekend[0] === fri ? ' active' : ''}`;
+    btn.textContent = label;
+    btn.onclick = () => {
+      selectedWeekend = [fri, sun, label];
+      selectedDate = '';
+      buildWeekendStrip();
+      render();
+    };
+    strip.appendChild(btn);
+  });
+}
+
+function setMode(mode) {
+  viewMode = mode;
+  $('tabAll').classList.toggle('active', mode === 'all');
+  $('tabWeekend').classList.toggle('active', mode === 'weekend');
+  $('tabFavorites').classList.toggle('active', mode === 'favorites');
+  $('topFavBtn').classList.toggle('active', mode === 'favorites');
+
+  $('dateRibbonSection').hidden = (mode !== 'all');
+  $('weekendStripWrap').hidden = (mode !== 'weekend');
+
+  if (mode === 'weekend') {
+    selectedDate = '';
+    if (!selectedWeekend) selectedWeekend = holidayWeekends[2];
+    buildWeekendStrip();
+  } else if (mode === 'all') {
+    selectedWeekend = null;
+    syncRibbonSelection();
+  } else if (mode === 'favorites') {
+    selectedDate = '';
+    selectedWeekend = null;
+  }
+  render();
+}
+
+function renderCard(e, contextTime, contextDateLabel) {
+  const cats = displayCategories(e);
+  const isCranberry = cats.includes('Drinks & Cocktails') || cats.includes('Holiday Pop-Ups') || cats.includes('Unique Experiences');
+  const count = globalCounts[e.id] || 0;
+  const isSaved = mySaved.has(e.id);
+  const isExpanded = expandedCards.has(e.id);
+  const others = occurrenceByEvent.get(e.id) || [];
+
+  const themeClass = count > 0 ? ' theme-gold' : isCranberry ? ' theme-cranberry' : '';
+  const kickerText = `${cats[0] || 'Holiday'} • ${e.city}`;
+  const dateDisplay = contextDateLabel || (e.start ? pretty(e.start) + (e.end && e.end !== e.start ? ' – ' + pretty(e.end) : '') : 'Date TBA');
+  const timeDisplay = contextTime || e.time;
+  const priceBadge = extractPriceBadge(e.notes);
+  const shortNote = e.notes && e.notes.length > 115 && !isExpanded ? e.notes.slice(0, 112).trim() + '…' : e.notes;
+  const hasMore = (e.notes && e.notes.length > 115) || others.length > 1 || e.venue;
+
+  return `<article class="card${themeClass}">
+    <div class="card-kicker">${esc(kickerText)}</div>
+
+    <div class="medallion-wrap" aria-hidden="true">
+      <span class="sparkle-left">✦</span>
+      <div class="medallion">${getMedallionSVG(cats, isCranberry)}</div>
+      <span class="sparkle-right">✦</span>
+    </div>
+
+    <h2>${esc(e.name)}</h2>
+    <div class="card-datetime">${esc(dateDisplay)}${timeDisplay ? ' • ' + esc(timeDisplay) : ''}</div>
+    ${e.venue ? `<div class="card-venue">📍 ${esc(e.venue)}</div>` : ''}
+
+    ${count > 0 ? `<div class="crowd-pill">★ Crowd Favorite (${count} Saved)</div>` : ''}
+    ${shortNote ? `<p class="card-note">${esc(shortNote)}</p>` : ''}
+    ${priceBadge ? `<div class="card-price">${esc(priceBadge)}</div>` : ''}
+
+    <div class="card-actions">
+      ${hasMore ? `<button class="pill-btn" onclick="toggleMoreInfo('${esc(e.id)}')">${isExpanded ? 'Less Info' : 'More Info'}</button>` : ''}
+      <button class="pill-btn${isSaved ? ' saved' : ''}" onclick="toggleSave('${esc(e.id)}')" aria-pressed="${isSaved}">
+        ${isSaved ? '♥ Saved' : '★ Save'}${count > 0 ? ` (${count})` : ''}
+      </button>
+      <button class="pill-btn" onclick="openCalendarModal('${esc(e.id)}')">📅 Cal</button>
+    </div>
+
+    ${e.url ? `<a class="ext-link" href="${esc(e.url)}" target="_blank" rel="noopener noreferrer">Official Details ↗</a>` : ''}
+
+    ${isExpanded ? `<div class="more-dates-box">
+      <div><strong>Categories:</strong> ${esc(cats.join(', '))}</div>
+      ${others.length > 1 ? `<div style="margin-top:5px"><strong>All ${others.length} Dates:</strong> ${others.map(o => esc(pretty(o.date))).join(' · ')}</div>` : ''}
+    </div>` : ''}
+  </article>`;
+}
+
+function render() {
+  const cat = $('category').value;
+  const reg = $('region').value;
+  const q = $('search').value.toLowerCase().trim();
+  const special = $('special').checked;
+
+  const matchesFilters = e => {
+    if (!e) return false;
+    if (cat && !displayCategories(e).includes(cat)) return false;
+    if (reg && getRegion(e.city) !== reg) return false;
+    if (special && e.event_type !== 'special') return false;
+    if (q && ![e.name, e.city, e.venue, e.notes, ...displayCategories(e)].join(' ').toLowerCase().includes(q)) return false;
+    return true;
+  };
+
+  if (viewMode === 'weekend' && selectedWeekend) {
+    const [fri, sun, label] = selectedWeekend;
+    const wkOccs = O.filter(o => o.date >= fri && o.date <= sun && matchesFilters(byId.get(o.event_id)));
+    const byDay = new Map();
+    wkOccs.forEach(o => {
+      if (!byDay.has(o.date)) byDay.set(o.date, []);
+      byDay.get(o.date).push(o);
+    });
+
+    const totalUnique = new Set(wkOccs.map(o => o.event_id)).size;
+    $('summary').textContent = `${totalUnique} adventure${totalUnique===1?'':'s'} across ${label}`;
+
+    if (!byDay.size) {
+      $('results').innerHTML = '<div class="empty">No events match your filters for this weekend. Try broadening your region or category!</div>';
+      return;
+    }
+
+    let html = '';
+    [...byDay.keys()].sort().forEach(dStr => {
+      const dayItems = byDay.get(dStr).sort((a,b) => {
+        const ea = byId.get(a.event_id), eb = byId.get(b.event_id);
+        return (ea.event_type === 'ongoing' ? 1 : 0) - (eb.event_type === 'ongoing' ? 1 : 0) || ea.name.localeCompare(eb.name);
+      });
+      html += `<div class="day-group-header"><h3>${esc(prettyFull(dStr))} (${dayItems.length})</h3></div>`;
+      html += dayItems.map(o => renderCard(byId.get(o.event_id), o.time, pretty(dStr))).join('');
+    });
+    $('results').innerHTML = html;
+    return;
+  }
+
+  if (viewMode === 'favorites') {
+    const favEvents = E.filter(e => ((globalCounts[e.id] || 0) > 0 || mySaved.has(e.id)) && matchesFilters(e))
+      .sort((a,b) => (globalCounts[b.id] || 0) - (globalCounts[a.id] || 0) || a.start.localeCompare(b.start));
+
+    $('summary').textContent = `${favEvents.length} Crowd Favorite${favEvents.length===1?'':'s'} ranked by group votes`;
+    $('results').innerHTML = favEvents.length
+      ? favEvents.map(e => renderCard(e, e.time, null)).join('')
+      : '<div class="empty">No Crowd Favorites saved yet! Browse the calendar and tap <strong>★ Save</strong> on any card to cast the first vote.</div>';
+    return;
+  }
+
+  if (selectedDate) {
+    const dayOccs = O.filter(o => o.date === selectedDate && matchesFilters(byId.get(o.event_id)))
+      .sort((a,b) => {
+        const ea = byId.get(a.event_id), eb = byId.get(b.event_id);
+        return (ea.event_type === 'ongoing' ? 1 : 0) - (eb.event_type === 'ongoing' ? 1 : 0) || ea.name.localeCompare(eb.name);
+      });
+    $('summary').textContent = `${dayOccs.length} event${dayOccs.length===1?'':'s'} on ${prettyFull(selectedDate)}`;
+    $('results').innerHTML = dayOccs.length
+      ? dayOccs.map(o => renderCard(byId.get(o.event_id), o.time, pretty(selectedDate))).join('')
+      : `<div class="empty">No scheduled events match your filters on ${esc(prettyFull(selectedDate))}.</div>`;
+  } else {
+    const filtered = E.filter(matchesFilters).sort((a,b) => (a.start||'9999').localeCompare(b.start||'9999') || a.name.localeCompare(b.name));
+    $('summary').textContent = `Showing ${filtered.length} of ${E.length} holiday adventures`;
+    $('results').innerHTML = filtered.length
+      ? filtered.map(e => renderCard(e, e.time, null)).join('')
+      : '<div class="empty">No events match your current filters. Try clearing your search or region!</div>';
+  }
+}
+
+$('tabAll').onclick = () => setMode('all');
+$('tabWeekend').onclick = () => setMode('weekend');
+$('tabFavorites').onclick = () => setMode('favorites');
+$('topFavBtn').onclick = () => setMode(viewMode === 'favorites' ? 'all' : 'favorites');
+
+['category','region','search','special'].forEach(id => $(id).addEventListener('input', render));
+
+$('clearDateBtn').onclick = () => { selectedDate = ''; syncRibbonSelection(); render(); };
+$('todayBtn').onclick = () => {
+  todayIso = centralTodayIso();
+  setMode('all');
+  selectedDate = (todayIso >= calendarStartDate && todayIso <= calendarEndDate) ? todayIso : '';
+  syncRibbonSelection();
+  render();
+};
+$('resetBtn').onclick = () => {
+  $('category').value = ''; $('region').value = ''; $('search').value = ''; $('special').checked = false;
+  selectedDate = (todayIso >= calendarStartDate && todayIso <= calendarEndDate) ? todayIso : '';
+  selectedWeekend = null;
+  setMode('all');
+  syncRibbonSelection();
+};
+
+$('shareSavedBtn').onclick = async () => {
+  const list = E.filter(e => mySaved.has(e.id)).map(e => `• ${e.name} (${e.city}) — ${pretty(e.start)}`).join('\n');
+  const text = list ? `🎄 My 2026 St. Louis Christmas Adventure List:
+
+${list}` : 'No events saved yet!';
+  try {
+    await navigator.clipboard.writeText(text);
+    $('shareSavedBtn').textContent = '✓ Copied!';
+    setTimeout(() => { $('shareSavedBtn').textContent = '📋 Copy My Saved List'; }, 2200);
+  } catch (e) { alert(text); }
+};
+
+// Fetch external JSON dataset
+async function initCalendar() {
+  try {
+    let jsonPath = './christmas_events_v2.json';
+    if (window.location.pathname.includes('christmas_sandbox_new')) {
+      jsonPath = '/christmas_sandbox_new/christmas_events_v2.json';
+    }
+    let res = await fetch(jsonPath);
+    if (!res.ok) {
+      res = await fetch('christmas_events_v2.json');
+      if (!res.ok) throw new Error('Failed to load json');
+    }
+    const data = await res.json();
+    if (!data || !Array.isArray(data.events) || !Array.isArray(data.occurrences)) {
+      throw new Error('The event JSON must contain events and occurrences arrays.');
+    }
+    E = data.events;
+    O = data.occurrences;
+    const occurrenceDates = O.map(o => o.date).filter(Boolean).sort();
+    calendarStartDate = occurrenceDates[0] || '';
+    calendarEndDate = occurrenceDates[occurrenceDates.length - 1] || '';
+    selectedDate = (todayIso >= calendarStartDate && todayIso <= calendarEndDate) ? todayIso : '';
+    byId = new Map(E.map(e => [e.id, e]));
+    O.forEach(o => {
+      if (!occurrenceByEvent.has(o.event_id)) occurrenceByEvent.set(o.event_id, []);
+      occurrenceByEvent.get(o.event_id).push(o);
+    });
+    populateCategories();
+    buildDateRibbon();
+    updateFavBadge();
+    syncFirebaseCounts();
+    syncRibbonSelection();
+    render();
+  } catch (err) {
+    console.error(err);
+    $('results').innerHTML = '<div class="empty">Error loading christmas_events_v2.json. Make sure both index.html and christmas_events_v2.json are uploaded in the same folder!</div>';
+  }
+}
+
+
+let activeEvent = null;
+const eventWeekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const dayNumber = value => {
+  const key = String(value || '').slice(0, 3).toLowerCase();
+  return ['sun','mon','tue','wed','thu','fri','sat'].indexOf(key);
+};
+
+function eventClauseMatchesDate(clause, dateIso) {
+  const weekday = new Date(`${dateIso}T12:00:00Z`).getUTCDay();
+  const names = '(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Mon|Tue|Wed|Thu|Fri|Sat|Sun)';
+  let matched = false;
+  const ranges = new RegExp(`\\b(${names})\\s*[-–—]\\s*(${names})\\b`, 'gi');
+  let match;
+  while ((match = ranges.exec(clause))) {
+    const first = dayNumber(match[1]);
+    const last = dayNumber(match[2]);
+    if (first >= 0 && last >= 0) {
+      matched = true;
+      if (first <= last ? (weekday >= first && weekday <= last) : (weekday >= first || weekday <= last)) return true;
+    }
+  }
+  const remaining = clause.replace(ranges, ' ');
+  const singles = new RegExp(`\\b${names}\\b`, 'gi');
+  while ((match = singles.exec(remaining))) {
+    const day = dayNumber(match[0]);
+    if (day >= 0) {
+      matched = true;
+      if (day === weekday) return true;
+    }
+  }
+  return !matched;
+}
+
+function timeChoicesFromText(value, dateIso) {
+  const source = String(value || '').trim();
+  if (!source || /\b(?:tba|tbd|hours?\s+vary|varies|variable|schedule\s+(?:is\s+)?pending|not\s+announced)\b/i.test(source)) return [];
+
+  const clauses = source.split(/;|\s+\/\s+/).map(part => part.trim()).filter(Boolean);
+  const weekdayPattern = /\b(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b/i;
+  const hasDayClauses = clauses.some(part => weekdayPattern.test(part));
+  const applicableClauses = hasDayClauses
+    ? clauses.filter(part => weekdayPattern.test(part) && eventClauseMatchesDate(part, dateIso))
+    : clauses;
+  const token = '(midnight|noon|\\d{1,2}(?::\\d{2})?)\\s*(a\\.?m\\.?|p\\.?m\\.?)?';
+  const rangePattern = new RegExp(`(${token})\\s*(?:[-–—]|\\bto\\b)\\s*(${token})`, 'gi');
+  const choices = [];
+  const parseClock = (raw, meridiem) => {
+    const special = raw.toLowerCase();
+    if (special === 'noon') return { hour: 12, minute: 0 };
+    if (special === 'midnight') return { hour: 0, minute: 0 };
+    const [hourText, minuteText = '0'] = raw.split(':');
+    let hour = Number(hourText);
+    const minute = Number(minuteText);
+    if (!Number.isInteger(hour) || hour < 1 || hour > 12 || minute < 0 || minute > 59) return null;
+    const period = String(meridiem || '').toLowerCase().replaceAll('.', '');
+    if (period === 'pm' && hour < 12) hour += 12;
+    if (period === 'am' && hour === 12) hour = 0;
+    return { hour, minute };
+  };
+  const endpoint = (raw, meridiem) => {
+    const found = new RegExp(`^(${token})$`, 'i').exec(raw.trim());
+    return found ? parseClock(found[2], found[3] || meridiem) : null;
+  };
+
+  for (const clause of applicableClauses) {
+    let foundRange = false;
+    rangePattern.lastIndex = 0;
+    let match;
+    while ((match = rangePattern.exec(clause))) {
+      const startRaw = match[2], startMeridiem = match[3];
+      const endRaw = match[5], endMeridiem = match[6];
+      const start = endpoint(startRaw, startMeridiem || endMeridiem);
+      const end = endpoint(endRaw, endMeridiem || startMeridiem);
+      if (!start || !end || !(startMeridiem || endMeridiem || /\b(?:noon|midnight)\b/i.test(match[0]))) continue;
+      if (end.hour * 60 + end.minute < start.hour * 60 + start.minute) end.nextDay = true;
+      choices.push({ start, end, display: `${formatClock(start)}–${formatClock(end)}` });
+      foundRange = true;
+    }
+    if (foundRange) continue;
+
+    const singlePattern = new RegExp(`(${token})`, 'gi');
+    const singles = [...clause.matchAll(singlePattern)].filter(item => item[3] || /\b(?:noon|midnight)\b/i.test(item[0]));
+    if (singles.length === 1 && /^(?:from\b|starting\s+at\b|at\b|doors?\s+open\b|opening\b|noon\b|midnight\b)/i.test(clause.trim())) {
+      const single = singles[0];
+      const start = endpoint(single[1], single[3]);
+      if (start) choices.push({ start, end: null, display: `From ${formatClock(start)}` });
+    } else if (singles.length === 1 && clause.trim().match(new RegExp(`^${token}$`, 'i'))) {
+      const single = singles[0];
+      const start = endpoint(single[1], single[3]);
+      if (start) choices.push({ start, end: null, display: `From ${formatClock(start)}` });
+    }
+  }
+
+  const unique = new Map();
+  choices.forEach(choice => unique.set(`${choice.start.hour}:${choice.start.minute}/${choice.end ? `${choice.end.hour}:${choice.end.minute}:${!!choice.end.nextDay}` : ''}`, choice));
+  return [...unique.values()];
+}
+function formatClock(clock) {
+  const suffix = clock.hour >= 12 ? 'PM' : 'AM';
+  const hour = clock.hour % 12 || 12;
+  return `${hour}${clock.minute ? `:${String(clock.minute).padStart(2, '0')}` : ''} ${suffix}`;
+}
+
+function selectedOccurrenceTime() {
+  return activeEvent?.selectedTime || null;
+}
+
+function updateCalendarTimeChoices() {
+  const control = document.getElementById('modalTimeControl');
+  const raw = activeEvent?.occurrence?.time || activeEvent?.event?.time || '';
+  const dateIso = activeEvent?.occurrence?.date || '';
+  activeEvent.timeChoices = timeChoicesFromText(raw, dateIso);
+  activeEvent.selectedTime = activeEvent.timeChoices[0] || null;
+  if (activeEvent.timeChoices.length > 1) {
+    const select = document.createElement('select');
+    select.id = 'modalTimeInput';
+    select.setAttribute('aria-label', 'Select the scheduled time');
+    select.style.cssText = 'width:100%; padding:0.75rem; font-size:1rem; border:1px solid #ccc; border-radius:6px; margin-bottom:0.5rem; box-sizing:border-box;';
+    activeEvent.timeChoices.forEach((choice, index) => {
+      const option = document.createElement('option');
+      option.value = String(index);
+      option.textContent = choice.display;
+      select.appendChild(option);
+    });
+    select.addEventListener('change', () => {
+      activeEvent.selectedTime = activeEvent.timeChoices[Number(select.value)];
+      updateModalSchedule();
+    });
+    control.replaceChildren(select);
+  } else {
+    control.replaceChildren();
+  }
+  updateModalSchedule();
+}
+
+function updateModalSchedule() {
+  const output = document.getElementById('modalScheduleStatus');
+  const parsed = selectedOccurrenceTime();
+  const raw = activeEvent?.occurrence?.time || activeEvent?.event?.time || '';
+  if (parsed) {
+    const multiple = activeEvent.timeChoices.length > 1 ? 'Choose the session time above. ' : '';
+    output.textContent = `${multiple}Selected time: ${parsed.display} Central Time${parsed.end?.nextDay ? ' (ends the next day)' : ''}.`;
+  } else if (/\b(?:tba|tbd|hours?\s+vary|varies|variable)\b/i.test(raw)) {
+    output.textContent = `The schedule says “${raw}”; calendar entries will be date-only.`;
+  } else {
+    output.textContent = raw ? `No single definite time can be determined from “${raw}”; calendar entries will be date-only.` : 'No definite time is listed; calendar entries will be date-only.';
+  }
+}
+function openCalendarModal(id) {
+  const event = byId.get(id);
+  if (!event) return;
+  let occurrences = [...(occurrenceByEvent.get(id) || [])]
+    .filter(item => /^\d{4}-\d{2}-\d{2}$/.test(item.date || ''))
+    .sort((a, b) => a.date.localeCompare(b.date));
+  if (!occurrences.length && event.start && event.start === (event.end || event.start)) {
+    occurrences = [{ event_id: id, date: event.start, time: event.time || '' }];
+  }
+
+  activeEvent = { event, occurrences, occurrence: null };
+  document.getElementById('modalEventTitle').innerText = `Add: ${event.name}`;
+  const control = document.getElementById('modalDateControl');
+  document.getElementById('modalTimeControl').replaceChildren();
+  const status = document.getElementById('modalScheduleStatus');
+  const buttons = document.querySelectorAll('#calModal .modal-buttons button[data-calendar-action]');
+
+  if (!occurrences.length) {
+    control.innerHTML = '<div class="empty">No individual scheduled dates are listed for this event, so there is no exact occurrence to add yet.</div>';
+    status.textContent = '';
+    buttons.forEach(button => { button.disabled = true; });
+    document.getElementById('calModal').style.display = 'flex';
+    return;
+  }
+
+  buttons.forEach(button => { button.disabled = false; });
+  const select = document.createElement('select');
+  select.id = 'modalDateInput';
+  select.style.cssText = 'width:100%; padding:0.75rem; font-size:1rem; border:1px solid #ccc; border-radius:6px; margin-bottom:0.5rem; box-sizing:border-box;';
+  occurrences.forEach((occurrence, index) => {
+    const option = document.createElement('option');
+    option.value = String(index);
+    const listedTime = occurrence.time || event.time || '';
+    option.textContent = `${prettyFull(occurrence.date)}${listedTime ? ` · ${listedTime}` : ''}`;
+    select.appendChild(option);
+  });
+  const suggestedIndex = Math.max(0, occurrences.findIndex(item => item.date === selectedDate));
+  select.value = String(suggestedIndex);
+  activeEvent.occurrence = occurrences[suggestedIndex];
+  select.addEventListener('change', () => {
+    activeEvent.occurrence = occurrences[Number(select.value)];
+    updateCalendarTimeChoices();
+  });
+  control.replaceChildren(select);
+  updateCalendarTimeChoices();
+  document.getElementById('calModal').style.display = 'flex';
+}
+function closeModal() {
+    document.getElementById('calModal').style.display = 'none';
+}
+function eventCalendarPayload() {
+  if (!activeEvent?.occurrence) return null;
+  const event = activeEvent.event;
+  const occurrence = activeEvent.occurrence;
+  const schedule = occurrence.time || event.time || '';
+  return { event, occurrence, schedule, parsed: selectedOccurrenceTime() };
+}
+
+function nextIsoDate(dateIso) {
+  const date = new Date(`${dateIso}T12:00:00Z`);
+  date.setUTCDate(date.getUTCDate() + 1);
+  return date.toISOString().slice(0, 10);
+}
+
+function pad2(value) { return String(value).padStart(2, '0'); }
+function localCalendarStamp(dateIso, clock) {
+  return `${dateIso.replaceAll('-', '')}T${pad2(clock.hour)}${pad2(clock.minute)}00`;
+}
+
+function centralWallTimeToUtc(dateIso, clock) {
+  const [year, month, day] = dateIso.split('-').map(Number);
+  const wanted = Date.UTC(year, month - 1, day, clock.hour, clock.minute, 0);
+  let guess = wanted;
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'
+  });
+  for (let i = 0; i < 4; i++) {
+    const parts = Object.fromEntries(formatter.formatToParts(new Date(guess)).map(part => [part.type, part.value]));
+    const represented = Date.UTC(Number(parts.year), Number(parts.month) - 1, Number(parts.day), Number(parts.hour), Number(parts.minute), Number(parts.second));
+    const adjustment = wanted - represented;
+    if (!adjustment) break;
+    guess += adjustment;
+  }
+  return new Date(guess);
+}
+
+function utcCalendarStamp(dateIso, clock) {
+  const stamp = centralWallTimeToUtc(clock.nextDay ? nextIsoDate(dateIso) : dateIso, clock);
+  return stamp.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z');
+}
+
+function calendarDetails(payload) {
+  const lines = [];
+  if (payload.schedule) lines.push(`Listed schedule: ${payload.schedule}`);
+  if (payload.parsed) lines.push(`Selected occurrence time: ${payload.parsed.display} America/Chicago`);
+  else lines.push('No definite time was provided; this is a date-only calendar entry.');
+  if (payload.event.notes) lines.push(payload.event.notes);
+  if (payload.event.url) lines.push(`Event details: ${payload.event.url}`);
+  return lines.join('\n');
+}
+
+function addToGoogleCalendar() {
+  const payload = eventCalendarPayload();
+  if (!payload) return;
+  const { event, occurrence, parsed } = payload;
+  let dates;
+  const params = new URLSearchParams({ action: 'TEMPLATE', text: event.name });
+  if (parsed) {
+    const start = localCalendarStamp(occurrence.date, parsed.start);
+    const end = parsed.end ? localCalendarStamp(parsed.end.nextDay ? nextIsoDate(occurrence.date) : occurrence.date, parsed.end) : start;
+    dates = `${start}/${end}`;
+    params.set('ctz', 'America/Chicago');
+  } else {
+    dates = `${occurrence.date.replaceAll('-', '')}/${nextIsoDate(occurrence.date).replaceAll('-', '')}`;
+  }
+  params.set('dates', dates);
+  params.set('details', calendarDetails(payload));
+  params.set('location', [event.venue, event.city].filter(Boolean).join(', '));
+  const url = `https://calendar.google.com/calendar/render?${params.toString()}`;
+  window.open(url, '_blank', 'noopener,noreferrer');
+  closeModal();
+}
+
+function escapeIcs(value) {
+  return String(value || '').replace(/\\/g, '\\\\').replace(/\r?\n/g, '\\n').replace(/,/g, '\\,').replace(/;/g, '\\;');
+}
+
+function foldIcsLine(line) {
+  const encoder = new TextEncoder();
+  const output = [];
+  let current = '';
+  let bytes = 0;
+  for (const character of line) {
+    const length = encoder.encode(character).length;
+    if (bytes + length > 75) {
+      output.push(current);
+      current = ` ${character}`;
+      bytes = 1 + length;
+    } else {
+      current += character;
+      bytes += length;
+    }
+  }
+  output.push(current);
+  return output.join('\r\n');
+}
+
+function buildIcs(payload) {
+  const { event, occurrence, parsed } = payload;
+  const now = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z');
+  const uid = `${String(event.id).replace(/[^A-Za-z0-9._-]/g, '-')}-${occurrence.date}@christmas-adventure-calendar`;
+  const location = [event.venue, event.city].filter(Boolean).join(', ');
+  const lines = [
+    'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Ellen Christmas Adventure Calendar//EN',
+    'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'BEGIN:VEVENT', `UID:${uid}`, `DTSTAMP:${now}`
+  ];
+  if (parsed) {
+    lines.push(`DTSTART:${utcCalendarStamp(occurrence.date, parsed.start)}`);
+    if (parsed.end) lines.push(`DTEND:${utcCalendarStamp(occurrence.date, parsed.end)}`);
+  } else {
+    lines.push(`DTSTART;VALUE=DATE:${occurrence.date.replaceAll('-', '')}`);
+    const dayAfter = nextIsoDate(occurrence.date).replaceAll('-', '');
+    lines.push(`DTEND;VALUE=DATE:${dayAfter}`);
+  }
+  lines.push(`SUMMARY:${escapeIcs(event.name)}`);
+  if (location) lines.push(`LOCATION:${escapeIcs(location)}`);
+  lines.push(`DESCRIPTION:${escapeIcs(calendarDetails(payload))}`);
+  if (event.url) lines.push(`URL:${event.url}`);
+  lines.push('END:VEVENT', 'END:VCALENDAR');
+  return lines.map(foldIcsLine).join('\r\n') + '\r\n';
+}
+
+async function downloadIcs() {
+  const payload = eventCalendarPayload();
+  if (!payload) return;
+  const safeName = String(payload.event.name || 'event').normalize('NFKD').replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-|-$/g, '').toLowerCase() || 'event';
+  const file = new File([buildIcs(payload)], `${safeName}-${payload.occurrence.date}.ics`, { type: 'text/calendar;charset=utf-8' });
+  if (navigator.canShare?.({ files: [file] }) && navigator.share) {
+    try {
+      await navigator.share({ files: [file], title: `Add ${payload.event.name} to a calendar` });
+      closeModal();
+      return;
+    } catch (error) {
+      if (error?.name === 'AbortError') return;
+    }
+  }
+  const url = URL.createObjectURL(file);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = file.name;
+  link.style.display = 'none';
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 30000);
+  closeModal();
+}
+
+initCalendar();
+</script>
+
+    <!-- Calendar Modal -->
+    <div id="calModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; padding:1rem; box-sizing:border-box; z-index:999;">
+        <div class="modal-content" style="background:white; padding:1.5rem; border-radius:12px; width:100%; max-width:400px; box-shadow:0 4px 12px rgba(0,0,0,0.2);">
+            <div class="modal-title" id="modalEventTitle" style="font-size:1.2rem; font-weight:bold; margin-bottom:1rem; color:var(--pine);">Add to Calendar</div>
+            <p style="font-size:0.9rem; margin-bottom:0.5rem;">Select the exact date you plan to attend:</p>
+            <div id="modalDateControl"></div>
+            <div id="modalTimeControl"></div>
+            <p id="modalScheduleStatus" aria-live="polite" style="font-size:0.85rem; color:var(--muted); margin:0 0 1rem;"></p>
+            <div class="modal-buttons" style="display:flex; justify-content:flex-end; gap:0.5rem; flex-wrap:wrap;">
+                <button class="pill-btn" onclick="closeModal()">Cancel</button>
+                <button class="pill-btn saved" data-calendar-action onclick="addToGoogleCalendar()">Google Calendar</button>
+                <button class="pill-btn" data-calendar-action onclick="downloadIcs()">Apple Calendar (.ics)</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
